@@ -1,24 +1,26 @@
-<script lang="ts">
+<script>
+  import { onMount } from "svelte";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
-
-  import { charities } from "../data/charities";
   export let params;
-  let data;
+  let charity;
 
-  function getCharity(id) {
-    return charities.find(function (charity) {
-      return charity.id === parseInt(id);
-    });
+  async function getCharity(id) {
+    const res = await fetch(
+      `http://charity-api-bwa.herokuapp.com/charities/${id}`
+    );
+    return res.json;
   }
 
-  data = getCharity(params.id);
+  onMount(async function () {
+    charity = await getCharity(params.id);
+  });
 </script>
 
 <Header />
 <!-- welcome section -->
 <!--breadcumb start here-->
-{#if data}
+{#if charity}
   <section
     class="xs-banner-inner-section parallax-window"
     style="background-image:url('assets/images/backgrounds/kat-yukawa-K0E6E0a0R3A-unsplash.jpg')"
@@ -26,7 +28,7 @@
     <div class="xs-black-overlay" />
     <div class="container">
       <div class="color-white xs-inner-banner-content">
-        <h2>{data.title}</h2>
+        <h2>{charity.title}</h2>
         <p>Give a helping hand for poor people</p>
         <ul class="xs-breadcumb">
           <li class="badge badge-pill badge-primary">
@@ -45,7 +47,7 @@
           <div class="col-lg-6">
             <div class="xs-donation-form-images">
               <img
-                src={data.thumbnail}
+                src={charity.thumbnail}
                 class="img-responsive"
                 alt="Family Images"
               />

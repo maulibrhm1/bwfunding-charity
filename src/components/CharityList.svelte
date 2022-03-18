@@ -223,4 +223,8 @@
   .pledged {
     margin-right: 2em;
   }
+  .btn {
+    text-decoration: none;
+    color: aliceblue;
+  }
 </style>

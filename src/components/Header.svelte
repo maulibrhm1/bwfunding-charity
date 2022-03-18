@@ -40,4 +40,10 @@
   </div>
   <!-- .container end -->
 </header>
+
 <!-- End header section -->
+<style>
+  .btn {
+    color: aliceblue;
+  }
+</style>
