@@ -1,71 +1,89 @@
 <script>
-  import { onMount } from "svelte";
+  import { charity, getCharity } from "../stores/data.js";
+  import { params } from "../stores/pages.js";
+  import router from "page";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
-  export let params;
-  let charity,
-    amount,
+  import Loader from "../components/Loader.svelte";
+
+  let amount = 0,
     name,
     email,
-    agree = false;
+    agree = false,
+    contribute = 0;
 
-  async function getCharity(id) {
-    const res = await fetch(
-      `http://charity-api-bwa.herokuapp.com/charities/${id}`
-    );
-    return res.json;
+  $: if ($charity) {
+    contribute = Math.floor((parseInt(amount) / $charity.target) * 100);
   }
 
+  getCharity($params.id);
+
   function handleButtonClick() {
-    console.log("Button Click");
+    console.log("Button click");
   }
 
   async function handleForm(event) {
-    charity.pledged = charity.pledged + parseInt(amount);
+    agree = false;
+    const newData = await getCharity($params.id);
+    newData.pledged = newData.pledged + parseInt(amount);
     try {
       const res = await fetch(
-        `http://charity-api-bwa.herokuapp.com/charities/${params.id}`,
+        `https://charity-api-bwa.herokuapp.com/charities/${$params.id}`,
         {
           method: "PUT",
           headers: {
-            "content-type": "aplication/json",
+            "content-type": "application/json",
           },
-          body: JSON.stringify(charity),
+          body: JSON.stringify(newData),
         }
       );
-      console.log(res);
+      const resMid = await fetch(`/.netlify/functions/payment`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id: $params.id,
+          amount: parseInt(amount),
+          name,
+          email,
+        }),
+      });
+      const midtransData = await resMid.json();
+      console.log(midtransData);
+      window.location.href = midtransData.url;
     } catch (err) {
-      consol.log(err);
+      console.log(err);
     }
   }
-
-  onMount(async function () {
-    charity = await getCharity(params.id);
-  });
 </script>
 
 <Header />
 <!-- welcome section -->
 <!--breadcumb start here-->
-{#if charity}
+{#if !$charity}
+  <Loader />
+{:else}
   <section
     class="xs-banner-inner-section parallax-window"
-    style="background-image:url('assets/images/backgrounds/kat-yukawa-K0E6E0a0R3A-unsplash.jpg')"
+    style="background-image:url('/assets/images/backgrounds/kat-yukawa-K0E6E0a0R3A-unsplash.jpg')"
   >
     <div class="xs-black-overlay" />
     <div class="container">
       <div class="color-white xs-inner-banner-content">
-        <h2>{charity.title}</h2>
-        <p>Give a helping hand for poor people</p>
+        <h2>Donate Now</h2>
+        <p>{$charity.title}</p>
         <ul class="xs-breadcumb">
           <li class="badge badge-pill badge-primary">
-            <a href="/" class="color-white">Home /</a> Donate
+            <a href="/" class="color-white">Home /</a>
+            Donate
           </li>
         </ul>
       </div>
     </div>
   </section>
-  <!--breadcumb end here--><!-- End welcome section -->
+  <!--breadcumb end here-->
+  <!-- End welcome section -->
   <main class="xs-main">
     <!-- donation form section -->
     <section class="xs-section-padding bg-gray">
@@ -74,7 +92,7 @@
           <div class="col-lg-6">
             <div class="xs-donation-form-images">
               <img
-                src={charity.thumbnail}
+                src={$charity.thumbnail}
                 class="img-responsive"
                 alt="Family Images"
               />
@@ -83,13 +101,19 @@
           <div class="col-lg-6">
             <div class="xs-donation-form-wraper">
               <div class="xs-heading xs-mb-30">
-                <h2 class="xs-title">Make a donation</h2>
+                <h2 class="xs-title">{$charity.title}</h2>
                 <p class="small">
-                  To learn more about make donate charity with us visit our "<span
-                    class="color-green">Contact us</span
-                  >" site. By calling
-                  <span class="color-green">+44(0) 800 883 8450</span>.
+                  To learn more about make donate charity with us visit our "
+                  <span class="color-green">Contact us</span>
+                  " site. By calling
+                  <span class="color-green">+44(0) 800 883 8450</span>
+                  .
                 </p>
+                <h5>
+                  Your donation will be contributing
+                  <strong>{contribute}%</strong>
+                  of total current donation.
+                </h5>
                 <span class="xs-separetor v2" />
               </div>
               <!-- .xs-heading end -->
@@ -140,10 +164,10 @@
                   <input
                     type="email"
                     name="email"
+                    required="true"
+                    bind:value={email}
                     id="xs-donate-email"
                     class="form-control"
-                    bind:value={email}
-                    required="true"
                     placeholder="email@awesome.com"
                   />
                 </div>
@@ -160,7 +184,7 @@
                   </label>
                 </div>
                 <!-- .xs-input-group END -->
-                <button type="submit" disable={!agree} class="btn btn-warning">
+                <button type="submit" disabled={!agree} class="btn btn-warning">
                   <span class="badge">
                     <i class="fa fa-heart" />
                   </span>
@@ -186,7 +210,6 @@
     display: flex;
     align-items: center;
   }
-
   #xs-donate-agree {
     width: 35px;
   }
@@ -196,5 +219,8 @@
   }
   .xs-donation-form-images {
     text-align: center;
+  }
+  .btn {
+    color: aliceblue;
   }
 </style>
