@@ -251,7 +251,6 @@
     <h5>Data belum tersedia</h5>
   {/if}
 </div> -->
-
 <style>
   .xs-list-with-content {
     font-size: 12px;
@@ -262,5 +261,8 @@
   }
   .pledged {
     margin-right: 2em;
+  }
+  .btn {
+    color: #f1f1f1;
   }
 </style>
