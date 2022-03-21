@@ -106,9 +106,4 @@
       </div>
     </div>
   </div>
-  <div class="xs-back-to-top-wraper">
-    <a href="#" class="xs-back-to-top">
-      <i class="fa fa-angle-up" />
-    </a>
-  </div>
 </footer>

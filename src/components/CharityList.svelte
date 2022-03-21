@@ -1,6 +1,6 @@
 <script>
-  import { fade, slide, fly } from "svelte/transition";
-  import { charities, charity } from "../stores/data.js";
+  import { fade, slide, fly, blur } from "svelte/transition";
+  import { charities } from "../stores/data.js";
   import Modal from "./Modal.svelte";
   import Loader from "./Loader.svelte";
 
@@ -54,7 +54,7 @@
       {#each $charities as charity}
         <div
           class="col-lg-4 col-md-6"
-          in:slide={{ delay: 1000 }}
+          in:blur={{ delay: 1000 }}
           out:fade={{ delay: 1000 }}
         >
           {#if isModalOpen === true}

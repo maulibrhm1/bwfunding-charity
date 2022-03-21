@@ -1,23 +1,22 @@
 <script>
-  import { onMount } from "svelte";
+  import { onDestroy } from "svelte";
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
   import Welcome from "../components/Welcome.svelte";
   import CharityList from "../components/CharityList.svelte";
   import Promo from "../components/Promo.svelte";
+  import BackToTop from "../components/BackToTop.svelte";
 
-  let charities = [];
-
-  onMount(async function () {
-    const res = await fetch("https://charity-api-bwa.herokuapp.com/charities");
-    charities = await res.json();
+  onDestroy(function () {
+    window.scrollTo(0, 0);
   });
 </script>
 
+<BackToTop />
 <Header />
 
 <Welcome />
-<CharityList {charities} />
+<CharityList />
 <Promo />
 
 <Footer />
