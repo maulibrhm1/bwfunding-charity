@@ -27,7 +27,7 @@
 
 <div class="back-to-top" on:click={goTop} class:hidden>
   <div class="xs-back-to-top-wraper">
-    <a href="#" class="xs-back-to-top">
+    <a href="/" class="xs-back-to-top">
       <i class="fa fa-angle-up" />
     </a>
   </div>

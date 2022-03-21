@@ -3,9 +3,12 @@
   import Footer from "../components/Footer.svelte";
   import Map from "../components/Map.svelte";
 
+  import BackToTop from "../components/BackToTop.svelte";
+
   export let ready;
 </script>
 
+<BackToTop />
 <svelte:head>
   <script
     defer

@@ -14,22 +14,22 @@
           </p>
           <ul class="xs-social-list-v2">
             <li>
-              <a href="" class="color-facebook">
+              <a href="https://www.facebook.com/" class="color-facebook">
                 <i class="fa fa-facebook" />
               </a>
             </li>
             <li>
-              <a href="" class="color-twitter">
+              <a href="https://www.twitter.com/" class="color-twitter">
                 <i class="fa fa-twitter" />
               </a>
             </li>
             <li>
-              <a href="" class="color-dribbble">
+              <a href="https://www.dribble.com/" class="color-dribbble">
                 <i class="fa fa-dribbble" />
               </a>
             </li>
             <li>
-              <a href="" class="color-pinterest">
+              <a href="https://id.pinterest.com/" class="color-pinterest">
                 <i class="fa fa-pinterest" />
               </a>
             </li>
@@ -43,16 +43,16 @@
               <a href="/">About employee</a>
             </li>
             <li>
-              <a href="#">How it works</a>
+              <a href="/">How it works</a>
             </li>
             <li>
-              <a href="#">Careers</a>
+              <a href="/">Careers</a>
             </li>
             <li>
-              <a href="#">Press</a>
+              <a href="/">Press</a>
             </li>
             <li>
-              <a href="#">Blog</a>
+              <a href="/">Blog</a>
             </li>
             <li>
               <a href="/contact">Contact</a>
@@ -92,7 +92,7 @@
           <nav class="xs-footer-menu">
             <ul>
               <li>
-                <a href="#">FAQ</a>
+                <a href="">FAQ</a>
               </li>
               <li>
                 <a href="#">Help Desk</a>
@@ -107,3 +107,9 @@
     </div>
   </div>
 </footer>
+
+<style>
+  a {
+    color: #f1f1f1;
+  }
+</style>

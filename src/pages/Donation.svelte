@@ -6,6 +6,8 @@
   import Footer from "../components/Footer.svelte";
   import Loader from "../components/Loader.svelte";
 
+  import BackToTop from "../components/BackToTop.svelte";
+
   let amount = 0,
     name,
     email,
@@ -58,6 +60,7 @@
   }
 </script>
 
+<BackToTop />
 <Header />
 <!-- welcome section -->
 <!--breadcumb start here-->

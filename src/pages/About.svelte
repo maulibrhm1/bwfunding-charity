@@ -1,8 +1,11 @@
 <script>
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
+
+  import BackToTop from "../components/BackToTop.svelte";
 </script>
 
+<BackToTop />
 <Header />
 <!-- welcome section -->
 <!--breadcumb start here-->
